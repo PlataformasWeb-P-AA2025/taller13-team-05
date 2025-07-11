@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Nuevo Edificio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+</head>
+<body>
+    <h1>Crear Nuevo Edificio</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+        {% for category, message in messages %}
+          <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+        <div>
+            <label for="nombre">Nombre:</label><br>
+            <input type="text" id="nombre" name="nombre" required>
+        </div>
+        <br>
+        <div>
+            <label for="direccion">Dirección:</label><br>
+            <input type="text" id="direccion" name="direccion" required>
+        </div>
+        <br>
+        <div>
+            <label for="ciudad">Ciudad:</label><br>
+            <input type="text" id="ciudad" name="ciudad" required>
+        </div>
+        <br>
+        <div>
+            <label for="tipo">Tipo:</label><br>
+            <select id="tipo" name="tipo" required>
+                <option value="residencial">Residencial</option>
+                <option value="comercial">Comercial</option>
+            </select>
+        </div>
+        <br>
+        <button type="submit">Crear Edificio</button>
+    </form>
+    <br>
+    <a href="{{ url_for('listar_edificios') }}">Cancelar y volver a la lista</a>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Departamentos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+</head>
+<body>
+    <h1>Lista de Departamentos ({{ numero_departamentos }})</h1>
+
+    <a href="{{ url_for('crear_departamento') }}">Crear Nuevo Departamento</a>
+    
+    <hr>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="messages">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    {% if departamentos %}
+        <ul>
+            {% for departamento in departamentos %}
+                <li>
+                    <strong>Propietario:</strong> {{ departamento.propietario }}<br>
+                    Costo: ${{ "%.2f"|format(departamento.costo|float) }}<br>
+                    Número de Cuartos: {{ departamento.num_cuartos }}<br>
+                    Edificio: {{ departamento.edificio_nombre }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No se encontraron departamentos.</p>
+    {% endif %}
+
+    <hr>
+    <a href="{{ url_for('index') }}">Volver al inicio</a>
+</body>
+</html>

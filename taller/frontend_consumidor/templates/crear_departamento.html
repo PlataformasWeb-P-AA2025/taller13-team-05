@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Nuevo Departamento</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+</head>
+<body>
+    <h1>Crear Nuevo Departamento</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="messages">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('crear_departamento') }}">
+        <div>
+            <label for="propietario">Nombre del Propietario:</label><br>
+            <input type="text" id="propietario" name="propietario" required>
+        </div>
+        <br>
+        <div>
+            <label for="costo">Costo:</label><br>
+            <input type="number" step="0.01" id="costo" name="costo" required>
+        </div>
+        <br>
+        <div>
+            <label for="num_cuartos">Número de Cuartos:</label><br>
+            <input type="number" id="num_cuartos" name="num_cuartos" required>
+        </div>
+        <br>
+        <div>
+            <label for="edificio">Edificio:</label><br>
+            <select id="edificio" name="edificio" required>
+                <option value="">-- Seleccione un Edificio --</option>
+                {% for edificio in edificios %}
+                    {# El valor del option es la URL de la API del edificio, no solo el ID #}
+                    <option value="{{ edificio.url }}">{{ edificio.nombre }} - {{ edificio.ciudad }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <br>
+        <button type="submit">Crear Departamento</button>
+    </form>
+    <br>
+    <a href="{{ url_for('listar_departamentos') }}">Cancelar y volver a la lista</a>
+</body>
+</html>

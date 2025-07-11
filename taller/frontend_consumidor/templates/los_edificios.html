@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Edificios</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+</head>
+<body>
+    <h1>Lista de Edificios ({{ numero_edificios }})</h1>
+
+    <a href="{{ url_for('crear_edificio') }}">Crear Nuevo Edificio</a>
+    
+    <hr>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="messages">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    {% if edificios %}
+        <ul>
+            {% for edificio in edificios %}
+                <li>
+                    <strong>{{ edificio.nombre }}</strong><br>
+                    Dirección: {{ edificio.direccion }}<br>
+                    Ciudad: {{ edificio.ciudad }}<br>
+                    Tipo: {{ edificio.tipo }}
+                    {# Puedes añadir más detalles o enlaces aquí si tu API los proporciona #}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No se encontraron edificios.</p>
+    {% endif %}
+
+    <hr>
+    <a href="{{ url_for('index') }}">Volver al inicio</a>
+</body>
+</html>
